@@ -1,6 +1,8 @@
 package com.aline.memorylane
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +17,18 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        val addMemoryButton = findViewById<Button>(R.id.buttonAddMemory)
+        val viewAllButton = findViewById<Button>(R.id.buttonViewAll)
+
+        addMemoryButton.setOnClickListener {
+            val intent = Intent(this, AddMemoryActivity::class.java)
+            startActivity(intent)
+        }
+
+        viewAllButton.setOnClickListener {
+            val intent = Intent(this, AllMemoriesActivity::class.java)
+            startActivity(intent)
         }
     }
 }
