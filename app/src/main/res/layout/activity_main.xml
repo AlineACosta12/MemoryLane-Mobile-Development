@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
     tools:context=".MainActivity">
 
     <ScrollView
@@ -23,28 +25,26 @@
 
             <TextView
                 android:id="@+id/textAppTitle"
+                style="@style/MemoryLaneTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Memory Lane"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:text="Memory Lane" />
 
             <TextView
                 android:id="@+id/textTagline"
+                style="@style/MemoryLaneTagline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Places hold stories."
-                android:textSize="16sp" />
+                android:text="Places hold stories." />
 
             <TextView
                 android:id="@+id/textAroundYouTitle"
+                style="@style/MemoryLaneSectionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Around You"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:text="Around You" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardNearbyMemory1"
@@ -52,17 +52,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/textNearbyMemoryTitle1"
+                        style="@style/MemoryLaneBody"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="First Coffee Together"
@@ -71,45 +73,47 @@
 
                     <TextView
                         android:id="@+id/textNearbyMemoryDistance1"
+                        style="@style/MemoryLaneCaption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="340 m away"
-                        android:textSize="14sp" />
+                        android:text="340 m away" />
 
                     <TextView
                         android:id="@+id/textNearbyMemoryDate1"
+                        style="@style/MemoryLaneCaption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="January 2025"
-                        android:textSize="14sp" />
+                        android:text="January 2025" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/textRecentlyAddedTitle"
+                style="@style/MemoryLaneSectionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="12dp"
-                android:text="Recently Added"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="Recently Added" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/textRecentMemoryTitle1"
+                        style="@style/MemoryLaneBody"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Malta"
@@ -118,17 +122,18 @@
 
                     <TextView
                         android:id="@+id/textRecentMemoryCategory1"
+                        style="@style/MemoryLaneCaption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Adventure"
-                        android:textSize="14sp" />
+                        android:text="Adventure" />
 
                     <TextView
                         android:id="@+id/textRecentMemoryDate1"
+                        style="@style/MemoryLaneCaption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="September 2026"
-                        android:textSize="14sp" />
+                        android:text="September 2026" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -141,11 +146,14 @@
 
             <Button
                 android:id="@+id/buttonViewAll"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="24dp"
                 android:text="View All Memories" />
+
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

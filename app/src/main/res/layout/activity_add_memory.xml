@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
     android:focusable="false"
     tools:context=".AddMemoryActivity">
 
@@ -24,19 +26,18 @@
 
             <TextView
                 android:id="@+id/textAddMemoryTitle"
+                style="@style/MemoryLaneTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add Memory"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:text="Add Memory" />
 
             <TextView
                 android:id="@+id/textAddMemorySubtitle"
+                style="@style/MemoryLaneBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Save a moment and connect it to a place."
-                android:textSize="15sp" />
+                android:text="Save a moment and connect it to a place." />
 
             <EditText
                 android:id="@+id/editMemoryTitle"
@@ -45,6 +46,10 @@
                 android:layout_marginTop="24dp"
                 android:ems="10"
                 android:hint="Memory title"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface"
+                android:textColorHint="?attr/colorOnSurfaceVariant"
                 android:importantForAutofill="no"
                 android:inputType="textCapSentences"
                 android:minHeight="48dp" />
@@ -57,7 +62,11 @@
                 android:ems="10"
                 android:gravity="top"
                 android:hint="Description"
-                android:inputType="textCapSentences | textMultiLine"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface"
+                android:textColorHint="?attr/colorOnSurfaceVariant"
+                android:inputType="textCapSentences|textMultiLine"
                 android:padding="12dp" />
 
             <EditText
@@ -68,6 +77,10 @@
                 android:ems="10"
                 android:focusable="false"
                 android:hint="Date"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
+                android:textColor="?attr/colorOnSurface"
+                android:textColorHint="?attr/colorOnSurfaceVariant"
                 android:inputType="text"
                 android:minHeight="48dp" />
 
@@ -88,28 +101,28 @@
 
             <TextView
                 android:id="@+id/textLocationStatus"
+                style="@style/MemoryLaneCaption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="No location selected"
-                android:textSize="14sp" />
+                android:text="No location selected" />
 
             <TextView
                 android:id="@+id/textRadiusLabel"
+                style="@style/MemoryLaneBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Rediscovery radius"
-                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textRadiusValue"
+                style="@style/MemoryLaneCaption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="500 m"
-                android:textSize="14sp" />
+                android:text="500 m" />
 
             <Button
                 android:id="@+id/buttonSaveMemory"
@@ -119,6 +132,8 @@
                 android:layout_marginBottom="24dp"
                 android:minHeight="48dp"
                 android:text="Save Memory" />
+
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

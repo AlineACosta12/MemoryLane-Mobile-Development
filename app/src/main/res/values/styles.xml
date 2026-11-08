@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MemoryLaneTitle">
+        <item name="android:fontFamily">@font/dm_serif_display</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="MemoryLaneSectionTitle">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="MemoryLaneBody">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="MemoryLaneCaption">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="MemoryLaneTagline">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+</resources>

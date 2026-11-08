@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
     tools:context=".MemoryDetailActivity">
 
     <ScrollView
@@ -23,48 +24,48 @@
 
             <TextView
                 android:id="@+id/textMemoryDetailTitle"
+                style="@style/MemoryLaneTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Memory Detail"
-                android:textSize="28sp"
-                android:textStyle="bold" />
+                android:text="Memory Detail" />
 
             <TextView
                 android:id="@+id/textMemoryTitle"
+                style="@style/MemoryLaneSectionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="First Coffee Together"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/textMemoryDate"
+                style="@style/MemoryLaneCaption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="January 2025"
-                android:textSize="14sp" />
+                android:text="January 2025" />
 
             <TextView
                 android:id="@+id/textMemoryCategory"
+                style="@style/MemoryLaneCaption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Together"
-                android:textSize="14sp" />
+                android:text="Together" />
 
             <TextView
                 android:id="@+id/textDescriptionLabel"
+                style="@style/MemoryLaneSectionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Description"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textMemoryDescription"
+                style="@style/MemoryLaneBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -73,15 +74,16 @@
 
             <TextView
                 android:id="@+id/textLocationLabel"
+                style="@style/MemoryLaneSectionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Location"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textMemoryDistance"
+                style="@style/MemoryLaneBody"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

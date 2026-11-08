@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Memory Lane</string>
+    <string name="tagline">Places hold stories.</string>
+    <string name="around_you">Around You</string>
+    <string name="recently_added">Recently Added</string>
+    <string name="add_memory">Add Memory</string>
 </resources>
