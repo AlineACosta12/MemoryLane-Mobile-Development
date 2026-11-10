@@ -1,10 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for the All Memories screen -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    style="@style/MemoryLaneTitle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AllMemoriesActivity">
+
+    <!-- Puts all the items one under the other and fills the whole screen -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Screen title -->
+        <TextView
+            android:id="@+id/textAllMemoriesTitle"
+            style="@style/MemoryLaneTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="All Memories" />
+
+        <!-- Small text under the title -->
+        <TextView
+            android:id="@+id/textAllMemoriesSubtitle"
+            style="@style/MemoryLaneBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Browse the moments you've saved." />
+
+        <!-- Label for the category filter -->
+        <TextView
+            android:id="@+id/textFilterLabel"
+            style="@style/MemoryLaneBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Filter by category" />
+
+        <!-- Dropdown to filter the memories by category -->
+        <Spinner
+            android:id="@+id/spinnerMemoryFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:minHeight="48dp" />
+
+        <!-- List that shows all the saved memories -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMemories"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

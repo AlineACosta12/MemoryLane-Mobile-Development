@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for the Add Memory screen -->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,6 +11,7 @@
     android:focusable="false"
     tools:context=".AddMemoryActivity">
 
+    <!-- ScrollView lets the user scroll if the content doesn't fit on the screen -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,12 +20,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Puts all the items one under the other -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
 
+            <!-- Screen title -->
             <TextView
                 android:id="@+id/textAddMemoryTitle"
                 style="@style/MemoryLaneTitle"
@@ -31,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="Add Memory" />
 
+            <!-- Small text under the title -->
             <TextView
                 android:id="@+id/textAddMemorySubtitle"
                 style="@style/MemoryLaneBody"
@@ -39,6 +44,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Save a moment and connect it to a place." />
 
+            <!-- Field to type the memory title -->
             <EditText
                 android:id="@+id/editMemoryTitle"
                 android:layout_width="match_parent"
@@ -54,6 +60,7 @@
                 android:inputType="textCapSentences"
                 android:minHeight="48dp" />
 
+            <!-- Bigger field to type the description -->
             <EditText
                 android:id="@+id/editMemoryDescription"
                 android:layout_width="match_parent"
@@ -69,6 +76,7 @@
                 android:inputType="textCapSentences|textMultiLine"
                 android:padding="12dp" />
 
+            <!-- Date field -->
             <EditText
                 android:id="@+id/editMemoryDate"
                 android:layout_width="match_parent"
@@ -84,6 +92,7 @@
                 android:inputType="text"
                 android:minHeight="48dp" />
 
+            <!-- Dropdown to choose the category -->
             <Spinner
                 android:id="@+id/spinnerCategory"
                 android:layout_width="match_parent"
@@ -91,6 +100,7 @@
                 android:layout_marginTop="16dp"
                 android:minHeight="48dp" />
 
+            <!-- Button to use the phone's current location -->
             <Button
                 android:id="@+id/buttonUseLocation"
                 android:layout_width="match_parent"
@@ -99,6 +109,7 @@
                 android:minHeight="48dp"
                 android:text="Use Current Location" />
 
+            <!-- Shows if a location was selected or not -->
             <TextView
                 android:id="@+id/textLocationStatus"
                 style="@style/MemoryLaneCaption"
@@ -107,6 +118,7 @@
                 android:layout_marginTop="8dp"
                 android:text="No location selected" />
 
+            <!-- Label for the rediscovery radius -->
             <TextView
                 android:id="@+id/textRadiusLabel"
                 style="@style/MemoryLaneBody"
@@ -116,6 +128,7 @@
                 android:text="Rediscovery radius"
                 android:textStyle="bold" />
 
+            <!-- Shows the radius value (500 metres by default) -->
             <TextView
                 android:id="@+id/textRadiusValue"
                 style="@style/MemoryLaneCaption"
@@ -124,6 +137,7 @@
                 android:layout_marginTop="4dp"
                 android:text="500 m" />
 
+            <!-- Button to save the memory -->
             <Button
                 android:id="@+id/buttonSaveMemory"
                 android:layout_width="match_parent"
