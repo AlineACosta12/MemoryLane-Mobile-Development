@@ -7,6 +7,9 @@
 **Module:** Mobile Development  
 **Project:** Developing an Android App  
 
+**GitHub Repository:**  
+https://github.com/AlineACosta12/MemoryLane-Mobile-Development
+
 ## Project Overview
 
 Memory Lane is a location-aware personal memory application for Android. It allows users to save personal memories linked to real-world places and rediscover them when they return nearby.
@@ -63,7 +66,7 @@ Core stored information:
 
 Simple local preferences may also be stored. The initial version does not require login or cloud storage.
 
-## Android Features
+## Android Features and Planned Capabilities
 
 - Multiple Activities with data shared between them
 - Explicit intents for internal navigation
@@ -134,7 +137,7 @@ The final demo should show:
 - Share implicit intent;
 - persistence after closing and reopening the app.
 
-## Suggested Repository Organisation
+## Repository Organisation
 
 ```text
 MemoryLane/
@@ -187,6 +190,6 @@ The exact package structure may be adjusted during implementation. The repositor
 - mobile optimisation
 - final UI refinement
 
-Optional enhancements should only be added after the required core is stable.
+Optional enhancements will only be added after the required core is stable.
 
 
