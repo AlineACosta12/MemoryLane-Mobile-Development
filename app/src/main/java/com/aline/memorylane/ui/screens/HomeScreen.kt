@@ -4,14 +4,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.aline.memorylane.ui.theme.MemoryLaneTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,8 +35,114 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.aline.memorylane.Memory
 import com.aline.memorylane.R
+import com.aline.memorylane.ui.theme.CardTitleStyle
+import com.aline.memorylane.ui.theme.SectionTitleStyle
+import com.aline.memorylane.SampleMemories
 
+@Composable
+fun HomeScreen(
+    onAddMemory: () -> Unit,
+    onViewAll: () -> Unit
+){
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .verticalScroll(rememberScrollState()),
+    ) {
+        HomeHeader()
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .offset(y = (-20).dp)
+                .background(
+                    MaterialTheme.colorScheme.background,
+                    RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+                )
+
+                .padding(16.dp)
+                .navigationBarsPadding(),
+            ) {
+            Text(
+                text = "Around You",
+                style = SectionTitleStyle,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = "Nearby memories will appear when location is available.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(Modifier.height(24.dp))
+
+            Text(
+                text = "Recently Added",
+                style = SectionTitleStyle,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+            Spacer(Modifier.height(10.dp))
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                SampleMemories.memories.asReversed().forEach { memory ->
+                    MemoryCard(memory)
+                }
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            Button(
+                onClick = onAddMemory,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Add Memory")
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            OutlinedButton(
+                onClick = onViewAll,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("View All Memories")
+            }
+
+        }
+    }
+}
+
+@Composable
+private fun MemoryCard(memory: Memory) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(
+                text = memory.title,
+                style = CardTitleStyle
+            )
+
+            Text(
+                text = "${memory.category} · ${memory.date}",
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+    }
+}
 @Composable
 private fun HomeHeader() {
     Box(
@@ -81,3 +200,20 @@ private fun HomeHeaderPreview() {
         HomeHeader()
     }
 }
+
+
+@Preview(
+    showBackground = true,
+    widthDp = 393,
+    heightDp = 850
+)
+@Composable
+private fun HomeScreenPreview(){
+    MemoryLaneTheme {
+        HomeScreen(
+            onAddMemory = {},
+            onViewAll = {}
+        )
+    }
+}
+
