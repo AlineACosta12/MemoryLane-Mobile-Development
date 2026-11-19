@@ -4,6 +4,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.aline.memorylane.ui.theme.MemoryLaneTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,7 +45,8 @@ import com.aline.memorylane.SampleMemories
 @Composable
 fun HomeScreen(
     onAddMemory: () -> Unit,
-    onViewAll: () -> Unit
+    onViewAll: () -> Unit,
+    onOpenMemory: (Int) -> Unit
 ){
     Column(
         Modifier
@@ -93,7 +95,10 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 SampleMemories.memories.asReversed().forEach { memory ->
-                    MemoryCard(memory)
+                    MemoryCard(
+                        memory = memory,
+                        onOpen = { onOpenMemory(memory.id) }
+                    )
                 }
             }
 
@@ -120,13 +125,19 @@ fun HomeScreen(
 }
 
 @Composable
-private fun MemoryCard(memory: Memory) {
+private fun MemoryCard(
+    memory: Memory,
+    onOpen: () -> Unit
+) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onOpen),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLowest
         )
+
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
@@ -212,7 +223,8 @@ private fun HomeScreenPreview(){
     MemoryLaneTheme {
         HomeScreen(
             onAddMemory = {},
-            onViewAll = {}
+            onViewAll = {},
+            onOpenMemory = {}
         )
     }
 }
