@@ -48,44 +48,46 @@ class MemoryDetailActivity : AppCompatActivity() {
 
         // Read the selected memory information sent by the previous Activity
         // Default values are used when the memory is opened directly from the Home screen
-        val memoryTitle =
-            intent.getStringExtra("memoryTitle")
-                ?: "First Coffee Together"
-        val memoryDescription =
-            intent.getStringExtra("memoryDescription")
-                ?: "Our first coffee together after a long walk around the city."
-        val memoryDate =
-            intent.getStringExtra("memoryDate")
-                ?: "January 2025"
-        val memoryCategory =
-            intent.getStringExtra("memoryCategory")
-                ?: "Together"
+        val memoryId = intent.getIntExtra("memory_id", -1)
+        val selectedMemory = SampleMemories.memories.find {
+            it.id == memoryId
+        }
+        val memoryTitle = selectedMemory?.title
+            ?: intent.getStringExtra("memoryTitle")
+            ?: "First Coffee Together"
+        val memoryDescription = selectedMemory?.description
+            ?: intent.getStringExtra("memoryDescription")
+            ?: "Our first coffee together after a long walk around the city."
+        val memoryDate = selectedMemory?.date
+            ?: intent.getStringExtra("memoryDate")
+            ?: "January 2025"
+        val memoryCategory = selectedMemory?.category
+            ?: intent.getStringExtra("memoryCategory")
+            ?: "Together"
 
         /*
          * The Home screen currently opens First Coffee Together without extras,
          * so its sample coordinates are used as a fallback.
          */
-        val openedFromHome =
-            !intent.hasExtra("memoryTitle")
-        val hasLocation =
-            if (openedFromHome) {
-                true
-            } else {
-                intent.hasExtra("memoryLatitude") &&
-                        intent.hasExtra("memoryLongitude")
-            }
-        val latitude =
-            if (openedFromHome) {
-                51.8985
-            } else {
+        val openedWithoutExtras =
+            !intent.hasExtra("memory_id") &&
+                    !intent.hasExtra("memoryTitle")
+        val latitude = when {
+            selectedMemory != null -> selectedMemory.latitude
+            intent.hasExtra("memoryLatitude") ->
                 intent.getDoubleExtra("memoryLatitude", 0.0)
-            }
-        val longitude =
-            if (openedFromHome) {
-                -8.4756
-            } else {
+            openedWithoutExtras -> 51.8985
+            else -> null
+        }
+        val longitude = when {
+            selectedMemory != null -> selectedMemory.longitude
+            intent.hasExtra("memoryLongitude") ->
                 intent.getDoubleExtra("memoryLongitude", 0.0)
-            }
+            openedWithoutExtras -> -8.4756
+            else -> null
+        }
+
+        val hasLocation = latitude != null && longitude != null
 
         // Display the selected memory information
         titleText.text = memoryTitle

@@ -35,10 +35,13 @@ class MainActivity : AppCompatActivity() {
                             )
                         )
                     },
-                    onOpenMemory = { _ ->
-                        startActivity(
-                            Intent(this@MainActivity, MemoryDetailActivity::class.java)
+                    onOpenMemory = { memoryId ->
+                        val intent = Intent(
+                            this@MainActivity,
+                            MemoryDetailActivity::class.java
                         )
+                        intent.putExtra("memory_id", memoryId)
+                        startActivity(intent)
                     }
                 )
             }
