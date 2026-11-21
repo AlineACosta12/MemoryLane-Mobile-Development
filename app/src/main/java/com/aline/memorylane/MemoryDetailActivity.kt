@@ -16,9 +16,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import com.aline.memorylane.ui.screens.MemoryDetailScreen
 import com.aline.memorylane.ui.theme.MemoryLaneTheme
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 
 class MemoryDetailActivity : AppCompatActivity() {
-
+    private val editMemoryLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        recreate()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -66,9 +72,30 @@ class MemoryDetailActivity : AppCompatActivity() {
                 ) {
                     MemoryDetailScreen(
                         memory = memory,
-
+                        onEdit = {
+                            val intent = Intent(
+                                this@MemoryDetailActivity,
+                                AddMemoryActivity::class.java
+                            )
+                            intent.putExtra("memory_id", memory.id)
+                            editMemoryLauncher.launch(intent)
+                        },
                         onBack = {
                             finish()
+                        },
+
+                        onDelete = {
+                            AlertDialog.Builder(this@MemoryDetailActivity)
+                                .setTitle("Delete memory?")
+                                .setMessage("Are you sure you want to delete this memory?")
+                                .setNegativeButton("Cancel", null)
+                                .setPositiveButton("Delete") { _, _ ->
+                                    SampleMemories.memories.removeAll {
+                                        it.id == memory.id
+                                    }
+                                    finish()
+                                }
+                                .show()
                         },
 
                         onOpenMaps = {
@@ -98,6 +125,7 @@ class MemoryDetailActivity : AppCompatActivity() {
                                     ).show()
                                 }
                             }
+
                         },
 
                         onOpenCompass = {

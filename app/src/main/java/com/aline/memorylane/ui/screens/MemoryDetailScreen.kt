@@ -20,7 +20,9 @@ fun MemoryDetailScreen(
     onBack: () -> Unit,
     onOpenMaps: () -> Unit,
     onOpenCompass: () -> Unit,
-    onShare: () -> Unit
+    onShare: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit
 ) {
     val hasLocation =
         memory.latitude != null && memory.longitude != null
@@ -135,6 +137,25 @@ fun MemoryDetailScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
         }
+
+        OutlinedButton(
+            onClick = onEdit,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Edit Memory")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedButton(
+            onClick = onDelete,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Delete Memory")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         Button(
             onClick = onShare,
             modifier = Modifier
@@ -156,7 +177,9 @@ private fun MemoryDetailScreenPreview() {
             onBack = {},
             onOpenMaps = {},
             onOpenCompass = {},
-            onShare = {}
+            onShare = {},
+            onEdit = {},
+            onDelete = {}
         )
     }
 }

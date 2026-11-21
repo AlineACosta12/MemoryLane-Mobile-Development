@@ -19,7 +19,9 @@ class AddMemoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
+        val memoryToEdit = SampleMemories.memories.find {
+            it.id == intent.getIntExtra("memory_id", -1)
+        }
         setContent {
             MemoryLaneTheme {
                 Box(
@@ -32,23 +34,33 @@ class AddMemoryActivity : AppCompatActivity() {
                         onBack = {
                             finish()
                         },
+                        memory = memoryToEdit,
                         onSave = { title, description, date, category, latitude, longitude ->
-                            val newId = (SampleMemories.memories.maxOfOrNull { it.id } ?: 0) + 1
-                            val newMemory = Memory(
-                                id = newId,
+                            val id = memoryToEdit?.id
+                                ?: ((SampleMemories.memories.maxOfOrNull { it.id } ?: 0) + 1)
+                            val memory = Memory(
+                                id = id,
                                 title = title,
                                 description = description,
                                 date = date,
                                 category = category,
                                 latitude = latitude,
-                                longitude = longitude
+                                longitude = longitude,
+                                rediscoveryRadius = memoryToEdit?.rediscoveryRadius ?: 500,
+                                isFavourite = memoryToEdit?.isFavourite ?: false
                             )
-                            SampleMemories.memories.add(newMemory)
+                            val index = SampleMemories.memories.indexOfFirst { it.id == id }
+                            if (index == -1) {
+                                SampleMemories.memories.add(memory)
+                            } else {
+                                SampleMemories.memories[index] = memory
+                            }
                             Toast.makeText(
                                 this@AddMemoryActivity,
-                                "Memory saved!",
+                                if (memoryToEdit == null) "Memory saved!" else "Memory updated!",
                                 Toast.LENGTH_SHORT
                             ).show()
+
                             finish()
                         }
                     )

@@ -88,7 +88,10 @@ class MainActivity : AppCompatActivity() {
                     currentLocation = currentLocation
                 )
             }
-            requestLocation()
         }
+    }
+    override fun onResume() {
+        super.onResume()
+        requestLocation()
     }
 }

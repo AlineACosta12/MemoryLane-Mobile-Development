@@ -50,20 +50,25 @@ fun HomeScreen(
     onOpenMemory: (Int) -> Unit,
     currentLocation: Location? = null
 ){
-    val nearbyMemories = SampleMemories.memories.filter { memory ->
-        val latitude = memory.latitude
-        val longitude = memory.longitude
+    val memoryDistances = currentLocation?.let { location ->
+        SampleMemories.memories.mapNotNull { memory ->
+            val lat = memory.latitude ?: return@mapNotNull null
+            val lon = memory.longitude ?: return@mapNotNull null
 
-        if (currentLocation == null || latitude == null || longitude == null) {
-            false
-        } else {
-            val destination = Location("memory")
-            destination.latitude = latitude
-            destination.longitude = longitude
-
-            currentLocation.distanceTo(destination) <= memory.rediscoveryRadius
+            val destination = Location("memory").apply {
+                latitude = lat
+                longitude = lon
+            }
+            memory to location.distanceTo(destination)
         }
-    }
+    } ?: emptyList()
+    val nearbyMemories = memoryDistances
+        .filter { it.second <= 2000f }
+        .map { it.first }
+    val returnedMemory = memoryDistances
+        .firstOrNull { it.second <= 150f }
+        ?.first
+
     Column(
         Modifier
             .fillMaxSize()
@@ -96,6 +101,19 @@ fun HomeScreen(
             } else if (nearbyMemories.isEmpty()) {
                 Text("No memories nearby.")
             } else {
+                if (returnedMemory != null) {
+                    Text(
+                        text = "You're Back Here!",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = "You're near ${returnedMemory.title}.",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+
                 Column(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {

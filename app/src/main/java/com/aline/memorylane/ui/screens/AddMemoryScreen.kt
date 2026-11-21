@@ -20,24 +20,26 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.aline.memorylane.sensors.location.LocationHelper
 import java.util.Locale
+import com.aline.memorylane.Memory
 
 
 @Composable
 fun AddMemoryScreen(
     onBack: () -> Unit,
-    onSave: (String, String, String, String, Double?, Double?) -> Unit
+    onSave: (String, String, String, String, Double?, Double?) -> Unit,
+    memory: Memory? = null
 ) {
-
-    var title by rememberSaveable { mutableStateOf("") }
-    var description by rememberSaveable { mutableStateOf("") }
-    var date by rememberSaveable { mutableStateOf("") }
-    var savedLatitude by rememberSaveable { mutableStateOf<Double?>(null) }
-    var savedLongitude by rememberSaveable { mutableStateOf<Double?>(null) }
+    var title by rememberSaveable { mutableStateOf(memory?.title.orEmpty()) }
+    var description by rememberSaveable { mutableStateOf(memory?.description.orEmpty()) }
+    var date by rememberSaveable { mutableStateOf(memory?.date.orEmpty()) }
+    var category by rememberSaveable { mutableStateOf(memory?.category.orEmpty()) }
+    var savedLatitude by rememberSaveable { mutableStateOf(memory?.latitude) }
+    var savedLongitude by rememberSaveable { mutableStateOf(memory?.longitude) }
     val context = LocalContext.current
     var locationStatus by rememberSaveable {
         mutableStateOf("Location will be available when GPS is connected.")
     }
-    var category by rememberSaveable { mutableStateOf("") }
+    var showErrors by rememberSaveable { mutableStateOf(false) }
     var categoryMenuExpanded by remember { mutableStateOf(false) }
 
     val locationPermissionLauncher = rememberLauncherForActivityResult(
@@ -92,7 +94,7 @@ fun AddMemoryScreen(
 
         // Screen heading
         Text(
-            text = "Add Memory",
+            text = if (memory == null) "Add Memory" else "Edit Memory",
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary
         )
@@ -109,6 +111,12 @@ fun AddMemoryScreen(
         // Memory title
         OutlinedTextField(
             value = title,
+            isError = showErrors && title.isBlank(),
+            supportingText = {
+                if (showErrors && title.isBlank()) {
+                    Text("Title is required")
+                }
+            },
             onValueChange = { title = it },
             label = { Text("Title") },
             placeholder = { Text("e.g. First Coffee Together") },
@@ -122,6 +130,12 @@ fun AddMemoryScreen(
         // Memory description
         OutlinedTextField(
             value = description,
+            isError = showErrors && description.isBlank(),
+            supportingText = {
+                if (showErrors && description.isBlank()) {
+                    Text("Description is required")
+                }
+            },
             onValueChange = { description = it },
             label = { Text("Description") },
             placeholder = { Text("Tell the story of this memory...") },
@@ -135,6 +149,12 @@ fun AddMemoryScreen(
         // Memory date
         OutlinedTextField(
             value = date,
+            isError = showErrors && date.isBlank(),
+            supportingText = {
+                if (showErrors && date.isBlank()) {
+                    Text("Date is required")
+                }
+            },
             onValueChange = {},
             label = { Text("Date") },
             placeholder = { Text("Select a date") },
@@ -174,6 +194,12 @@ fun AddMemoryScreen(
 
             OutlinedTextField(
                 value = category,
+                isError = showErrors && category.isBlank(),
+                supportingText = {
+                    if (showErrors && category.isBlank()) {
+                        Text("Category is required")
+                    }
+                },
                 onValueChange = {},
                 label = { Text("Category") },
                 placeholder = { Text("Choose a category") },
@@ -250,6 +276,13 @@ fun AddMemoryScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                if (showErrors && (savedLatitude == null || savedLongitude == null)) {
+                    Text(
+                        text = "Location is required",
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -275,22 +308,28 @@ fun AddMemoryScreen(
         // Save memory button
         Button(
             onClick = {
-                onSave(
-                    title.trim(),
-                    description.trim(),
-                    date,
-                    category,
-                    savedLatitude,
-                    savedLongitude
-                )
+                showErrors = true
+                if (title.isNotBlank() &&
+                    description.isNotBlank() &&
+                    date.isNotBlank() &&
+                    category.isNotBlank() &&
+                    savedLatitude != null &&
+                    savedLongitude != null
+                ) {
+
+                    onSave(
+                        title.trim(),
+                        description.trim(),
+                        date,
+                        category,
+                        savedLatitude,
+                        savedLongitude
+                    )
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(52.dp),
-            enabled = title.isNotBlank() &&
-                    description.isNotBlank() &&
-                    date.isNotBlank() &&
-                    category.isNotBlank(),
             shape = RoundedCornerShape(16.dp)
         ) {
             Text("Save Memory")
