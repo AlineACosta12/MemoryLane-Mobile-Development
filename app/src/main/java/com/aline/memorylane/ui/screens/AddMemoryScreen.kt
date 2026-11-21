@@ -17,6 +17,11 @@ import android.widget.Toast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.aline.memorylane.ui.theme.MemoryLaneTheme
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import com.aline.memorylane.sensors.location.LocationHelper
+import java.util.Locale
 
 
 @Composable
@@ -35,6 +40,38 @@ fun AddMemoryScreen(
     var category by rememberSaveable { mutableStateOf("") }
     var categoryMenuExpanded by remember { mutableStateOf(false) }
 
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+
+        val preciseGranted =
+            permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
+
+        val approximateGranted =
+            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+
+        if (preciseGranted || approximateGranted) {
+
+            locationStatus = "Getting current location..."
+
+            LocationHelper.getCurrentLocation(context) { location ->
+
+                locationStatus = if (location != null) {
+                    String.format(
+                        Locale.US,
+                        "Latitude: %.6f\nLongitude: %.6f",
+                        location.latitude,
+                        location.longitude
+                    )
+                } else {
+                    "Could not get location. Check GPS and try again."
+                }
+            }
+
+        } else {
+            locationStatus = "Location permission denied."
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -217,14 +254,12 @@ fun AddMemoryScreen(
                 // Use Location button
                 OutlinedButton(
                     onClick = {
-                        locationStatus =
-                            "Location integration planned for Milestone 2"
-
-                        Toast.makeText(
-                            context,
-                            "GPS will be connected in the next milestone",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        locationPermissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            )
+                        )
                     },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp)

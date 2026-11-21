@@ -41,12 +41,14 @@ import com.aline.memorylane.R
 import com.aline.memorylane.ui.theme.CardTitleStyle
 import com.aline.memorylane.ui.theme.SectionTitleStyle
 import com.aline.memorylane.SampleMemories
+import android.location.Location
 
 @Composable
 fun HomeScreen(
     onAddMemory: () -> Unit,
     onViewAll: () -> Unit,
-    onOpenMemory: (Int) -> Unit
+    onOpenMemory: (Int) -> Unit,
+    currentLocation: Location? = null
 ){
     Column(
         Modifier
@@ -211,7 +213,6 @@ private fun HomeHeaderPreview() {
         HomeHeader()
     }
 }
-
 
 @Preview(
     showBackground = true,

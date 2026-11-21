@@ -19,12 +19,25 @@ import com.aline.memorylane.R
 import com.aline.memorylane.SampleMemories
 import com.aline.memorylane.ui.components.CompassDial
 import com.aline.memorylane.ui.theme.MemoryLaneTheme
+import androidx.compose.ui.draw.rotate
+import com.aline.memorylane.sensors.compass.CompassResult
+import java.util.Locale
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.draw.shadow
 
 @Composable
 fun MemoryCompassScreen(
     memory: Memory?,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    heading: Float? = null,
+    compassResult: CompassResult? = null
 ) {
+    val dialRotation = if (compassResult != null) {
+        compassResult.arrowRotationDegrees -
+                compassResult.bearingDegrees
+    } else {
+        -(heading ?: 0f)
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,17 +85,20 @@ fun MemoryCompassScreen(
             modifier = Modifier.size(300.dp),
             contentAlignment = Alignment.Center
         ) {
-
             CompassDial(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .shadow(4.dp, CircleShape)
+                    .rotate(dialRotation)
             )
-
             Image(
                 painter = painterResource(
                     id = R.drawable.compass_arrow
                 ),
                 contentDescription = "Compass arrow",
-                modifier = Modifier.size(190.dp)
+                modifier = Modifier
+                    .size(190.dp)
+                    .rotate(compassResult?.arrowRotationDegrees ?: 0f)
             )
         }
 
@@ -90,8 +106,16 @@ fun MemoryCompassScreen(
 
         // Location status
         Text(
-            text = "Direction pending",
-            style = MaterialTheme.typography.headlineSmall,
+            text = if (compassResult != null) {
+                String.format(
+                    Locale.US,
+                    "%.0f m",
+                    compassResult.distanceMeters
+                )
+            } else {
+                "Finding your location..."
+            },
+            style = MaterialTheme.typography.displaySmall,
             color = MaterialTheme.colorScheme.primary
         )
 
@@ -102,8 +126,21 @@ fun MemoryCompassScreen(
             color = MaterialTheme.colorScheme.primaryContainer
         ) {
             Text(
-                text = "GPS and sensors not connected",
-                style = MaterialTheme.typography.labelLarge,
+                text = if (compassResult != null) {
+                val directions = listOf(
+                    "N", "NE", "E", "SE",
+                    "S", "SW", "W", "NW"
+                )
+
+                val index = (
+                        (compassResult.bearingDegrees + 22.5f) / 45f
+                        ).toInt() % 8
+
+                "Head ${directions[index]} · ${compassResult.distanceMeters.toInt()} m"
+            } else {
+                "Waiting for location..."
+            },
+            style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier.padding(
                     horizontal = 16.dp,
@@ -121,7 +158,11 @@ fun MemoryCompassScreen(
             color = MaterialTheme.colorScheme.surface
         ) {
             Text(
-                text = "Your compass will point towards a saved memory when location and orientation sensors are connected.",
+                text = if (compassResult != null) {
+                    "Turn your phone slowly. The arrow points towards the selected memory."
+                } else {
+                    "Waiting for location and orientation data..."
+                },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
