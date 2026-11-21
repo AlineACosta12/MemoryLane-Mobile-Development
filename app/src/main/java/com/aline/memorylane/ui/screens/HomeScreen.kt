@@ -50,6 +50,20 @@ fun HomeScreen(
     onOpenMemory: (Int) -> Unit,
     currentLocation: Location? = null
 ){
+    val nearbyMemories = SampleMemories.memories.filter { memory ->
+        val latitude = memory.latitude
+        val longitude = memory.longitude
+
+        if (currentLocation == null || latitude == null || longitude == null) {
+            false
+        } else {
+            val destination = Location("memory")
+            destination.latitude = latitude
+            destination.longitude = longitude
+
+            currentLocation.distanceTo(destination) <= memory.rediscoveryRadius
+        }
+    }
     Column(
         Modifier
             .fillMaxSize()
@@ -77,12 +91,22 @@ fun HomeScreen(
 
             Spacer(Modifier.height(8.dp))
 
-            Text(
-                text = "Nearby memories will appear when location is available.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
+            if (currentLocation == null) {
+                Text("Waiting for current location...")
+            } else if (nearbyMemories.isEmpty()) {
+                Text("No memories nearby.")
+            } else {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    nearbyMemories.forEach { memory ->
+                        MemoryCard(
+                            memory = memory,
+                            onOpen = { onOpenMemory(memory.id) }
+                        )
+                    }
+                }
+            }
             Spacer(Modifier.height(24.dp))
 
             Text(

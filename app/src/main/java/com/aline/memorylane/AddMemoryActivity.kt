@@ -32,26 +32,24 @@ class AddMemoryActivity : AppCompatActivity() {
                         onBack = {
                             finish()
                         },
-                        onSave = { title, description, date, category ->
-
-                            if (
-                                title.isBlank() ||
-                                description.isBlank() ||
-                                date.isBlank() ||
-                                category.isBlank()
-                            ) {
-                                Toast.makeText(
-                                    this@AddMemoryActivity,
-                                    "Please complete all fields",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                Toast.makeText(
-                                    this@AddMemoryActivity,
-                                    "Memory details are ready to save",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                        onSave = { title, description, date, category, latitude, longitude ->
+                            val newId = (SampleMemories.memories.maxOfOrNull { it.id } ?: 0) + 1
+                            val newMemory = Memory(
+                                id = newId,
+                                title = title,
+                                description = description,
+                                date = date,
+                                category = category,
+                                latitude = latitude,
+                                longitude = longitude
+                            )
+                            SampleMemories.memories.add(newMemory)
+                            Toast.makeText(
+                                this@AddMemoryActivity,
+                                "Memory saved!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            finish()
                         }
                     )
                 }

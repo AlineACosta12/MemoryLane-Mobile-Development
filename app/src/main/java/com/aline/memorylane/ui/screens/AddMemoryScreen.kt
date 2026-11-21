@@ -1,4 +1,3 @@
-
 package com.aline.memorylane.ui.screens
 
 import androidx.compose.foundation.background
@@ -13,7 +12,6 @@ import androidx.compose.ui.Modifier
 import android.app.DatePickerDialog
 import androidx.compose.ui.platform.LocalContext
 import java.util.Calendar
-import android.widget.Toast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.aline.memorylane.ui.theme.MemoryLaneTheme
@@ -27,12 +25,14 @@ import java.util.Locale
 @Composable
 fun AddMemoryScreen(
     onBack: () -> Unit,
-    onSave: (String, String, String, String) -> Unit
+    onSave: (String, String, String, String, Double?, Double?) -> Unit
 ) {
 
     var title by rememberSaveable { mutableStateOf("") }
     var description by rememberSaveable { mutableStateOf("") }
     var date by rememberSaveable { mutableStateOf("") }
+    var savedLatitude by rememberSaveable { mutableStateOf<Double?>(null) }
+    var savedLongitude by rememberSaveable { mutableStateOf<Double?>(null) }
     val context = LocalContext.current
     var locationStatus by rememberSaveable {
         mutableStateOf("Location will be available when GPS is connected.")
@@ -57,6 +57,8 @@ fun AddMemoryScreen(
             LocationHelper.getCurrentLocation(context) { location ->
 
                 locationStatus = if (location != null) {
+                    savedLatitude = location.latitude
+                    savedLongitude = location.longitude
                     String.format(
                         Locale.US,
                         "Latitude: %.6f\nLongitude: %.6f",
@@ -237,7 +239,7 @@ fun AddMemoryScreen(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = "No location added",
+                    text = if (savedLatitude != null) "Location added" else "No location added",
                     style = MaterialTheme.typography.bodyLarge
                 )
 
@@ -277,7 +279,9 @@ fun AddMemoryScreen(
                     title.trim(),
                     description.trim(),
                     date,
-                    category
+                    category,
+                    savedLatitude,
+                    savedLongitude
                 )
             },
             modifier = Modifier
@@ -303,7 +307,7 @@ private fun AddMemoryScreenPreview() {
 
         AddMemoryScreen(
             onBack = {},
-            onSave = { _, _, _, _ -> }
+            onSave = { _, _, _, _, _, _ -> }
         )
     }
 }
