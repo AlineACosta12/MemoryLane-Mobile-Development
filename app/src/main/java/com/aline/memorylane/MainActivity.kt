@@ -16,9 +16,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.ContextCompat
 import com.aline.memorylane.sensors.location.LocationHelper
+import android.location.LocationListener
 
 class MainActivity : AppCompatActivity() {
     private var currentLocation by mutableStateOf<Location?>(null)
+    private var locationListener: LocationListener? = null
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -27,8 +29,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun loadLocation() {
-        LocationHelper.getCurrentLocation(this) { location ->
+        if (locationListener != null) return
+        locationListener = LocationHelper.startLocationUpdates(this) { location ->
             currentLocation = location
+        }
+        LocationHelper.getCurrentLocation(this) { location ->
+            if (location != null) {
+                currentLocation = location
+            }
         }
     }
     private fun requestLocation() {
@@ -93,5 +101,12 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         requestLocation()
+    }
+    override fun onPause() {
+        locationListener?.let {
+            LocationHelper.stopLocationUpdates(this, it)
+        }
+        locationListener = null
+        super.onPause()
     }
 }

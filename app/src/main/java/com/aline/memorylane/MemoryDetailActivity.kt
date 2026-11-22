@@ -18,6 +18,9 @@ import com.aline.memorylane.ui.screens.MemoryDetailScreen
 import com.aline.memorylane.ui.theme.MemoryLaneTheme
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import android.location.Location
+import androidx.compose.runtime.mutableStateOf
+import com.aline.memorylane.sensors.location.LocationHelper
 
 class MemoryDetailActivity : AppCompatActivity() {
     private val editMemoryLauncher = registerForActivityResult(
@@ -62,6 +65,22 @@ class MemoryDetailActivity : AppCompatActivity() {
             SampleMemories.memories.first()
         }
 
+        val distance = mutableStateOf<Float?>(null)
+
+        LocationHelper.getCurrentLocation(this) { currentLocation ->
+            val lat = memory.latitude
+            val lon = memory.longitude
+
+            if (currentLocation != null && lat != null && lon != null) {
+                val destination = Location("memory").apply {
+                    latitude = lat
+                    longitude = lon
+                }
+
+                distance.value = currentLocation.distanceTo(destination)
+            }
+        }
+
         setContent {
             MemoryLaneTheme {
                 Box(
@@ -72,6 +91,7 @@ class MemoryDetailActivity : AppCompatActivity() {
                 ) {
                     MemoryDetailScreen(
                         memory = memory,
+                        distanceMeters = distance.value,
                         onEdit = {
                             val intent = Intent(
                                 this@MemoryDetailActivity,

@@ -8,6 +8,8 @@ import android.location.Location
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
+import android.location.LocationListener
+import android.os.Looper
 
 object LocationHelper {
     @SuppressLint("MissingPermission")
@@ -54,6 +56,57 @@ object LocationHelper {
         } catch (e: SecurityException) {
             onResult(null)
         }
+    }
+    @SuppressLint("MissingPermission")
+    fun startLocationUpdates(
+        context: Context,
+        onUpdate: (Location) -> Unit
+    ): LocationListener? {
+        val manager = context.getSystemService(
+            Context.LOCATION_SERVICE
+        ) as LocationManager
+        val fine = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        val coarse = ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+        val provider = when {
+            (fine || coarse) &&
+                    manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ->
+                LocationManager.NETWORK_PROVIDER
+
+            fine && manager.isProviderEnabled(LocationManager.GPS_PROVIDER) ->
+                LocationManager.GPS_PROVIDER
+
+            else -> return null
+        }
+        val listener = LocationListener { location ->
+            onUpdate(location)
+        }
+        return try {
+            manager.requestLocationUpdates(
+                provider,
+                3000L,
+                5f,
+                listener,
+                Looper.getMainLooper()
+            )
+            listener
+        } catch (e: SecurityException) {
+            null
+        }
+    }
+    fun stopLocationUpdates(
+        context: Context,
+        listener: LocationListener
+    ) {
+        val manager = context.getSystemService(
+            Context.LOCATION_SERVICE
+        ) as LocationManager
+        manager.removeUpdates(listener)
     }
 }
 

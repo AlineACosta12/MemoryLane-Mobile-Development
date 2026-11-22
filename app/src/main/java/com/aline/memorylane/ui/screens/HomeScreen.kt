@@ -42,6 +42,9 @@ import com.aline.memorylane.ui.theme.CardTitleStyle
 import com.aline.memorylane.ui.theme.SectionTitleStyle
 import com.aline.memorylane.SampleMemories
 import android.location.Location
+import androidx.compose.foundation.layout.Row
+import androidx.compose.ui.draw.clip
+import com.aline.memorylane.ui.components.MemoryPhoto
 
 @Composable
 fun HomeScreen(
@@ -183,18 +186,30 @@ private fun MemoryCard(
         )
 
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(
-                text = memory.title,
-                style = CardTitleStyle
+            MemoryPhoto(
+                photoUri = memory.photoUri,
+                modifier = Modifier
+                    .size(88.dp)
+                    .clip(RoundedCornerShape(12.dp))
             )
+            Column {
+                Text(
+                    text = memory.title,
+                    style = CardTitleStyle
+                )
 
-            Text(
-                text = "${memory.category} · ${memory.date}",
-                style = MaterialTheme.typography.bodySmall
-            )
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = "${memory.category} · ${memory.date}",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
     }
 }

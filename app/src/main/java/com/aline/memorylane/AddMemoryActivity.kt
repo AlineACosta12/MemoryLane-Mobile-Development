@@ -35,7 +35,7 @@ class AddMemoryActivity : AppCompatActivity() {
                             finish()
                         },
                         memory = memoryToEdit,
-                        onSave = { title, description, date, category, latitude, longitude ->
+                        onSave = { title, description, date, category, latitude, longitude, photoUri ->
                             val id = memoryToEdit?.id
                                 ?: ((SampleMemories.memories.maxOfOrNull { it.id } ?: 0) + 1)
                             val memory = Memory(
@@ -47,7 +47,8 @@ class AddMemoryActivity : AppCompatActivity() {
                                 latitude = latitude,
                                 longitude = longitude,
                                 rediscoveryRadius = memoryToEdit?.rediscoveryRadius ?: 500,
-                                isFavourite = memoryToEdit?.isFavourite ?: false
+                                isFavourite = memoryToEdit?.isFavourite ?: false,
+                                photoUri = photoUri
                             )
                             val index = SampleMemories.memories.indexOfFirst { it.id == id }
                             if (index == -1) {
