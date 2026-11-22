@@ -1,4 +1,3 @@
-
 package com.aline.memorylane.sensors.compass
 
 import android.hardware.GeomagneticField
@@ -9,6 +8,7 @@ data class CompassResult(
     val bearingDegrees: Float,
     val arrowRotationDegrees: Float
 )
+
 object CompassCalculator {
     fun calculate(
         currentLocation: Location,

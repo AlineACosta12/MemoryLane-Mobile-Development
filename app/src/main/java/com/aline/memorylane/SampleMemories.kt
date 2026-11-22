@@ -1,6 +1,7 @@
 package com.aline.memorylane
 
 import androidx.compose.runtime.mutableStateListOf
+
 object SampleMemories {
     // Sample memories used until persistent storage is implemented
     val memories = mutableStateListOf(
