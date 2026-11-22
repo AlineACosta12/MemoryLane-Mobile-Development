@@ -1,0 +1,23 @@
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Arrow pointing upwards -->
+    <path
+        android:fillColor="@color/ml_primary"
+        android:pathData="M50,8 L68,62 Q50,54 32,62 Z" />
+
+    <!-- Lighter side of the arrow -->
+    <path
+        android:fillColor="@color/ml_primary_container"
+        android:pathData="M50,8 L50,57 Q41,58 32,62 Z" />
+
+    <!-- Central circle -->
+    <path
+        android:fillColor="@color/ml_on_surface"
+        android:pathData="M50,44 m-6,0 a6,6 0,1 1,12 0 a6,6 0,1 1,-12 0" />
+
+</vector>

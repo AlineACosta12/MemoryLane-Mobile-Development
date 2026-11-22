@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rolling green hills: Home header and the placeholder for memories without a photo -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="220dp"
+    android:viewportWidth="360"
+    android:viewportHeight="220">
+    <path android:fillColor="@color/land_sky" android:pathData="M0,0h360v220h-360z" />
+    <path android:fillColor="@color/land_sun" android:pathData="M268,62m-30,0a30,30 0,1 1,60 0a30,30 0,1 1,-60 0" />
+    <path android:fillColor="@color/land_far" android:pathData="M0,120 C40,92 80,88 120,104 C160,120 190,84 236,82 C280,80 320,100 360,92 L360,220 L0,220 Z" />
+    <path android:fillColor="@color/land_mid" android:pathData="M0,150 C50,118 100,124 150,140 C200,156 250,116 300,120 C330,122 350,132 360,138 L360,220 L0,220 Z" />
+    <!-- trees -->
+    <path android:fillColor="@color/land_near" android:pathData="M62,138 l10,-26 l10,26 z M84,140 l8,-20 l8,20 z M292,126 l9,-24 l9,24 z M310,128 l7,-18 l7,18 z" />
+    <path android:fillColor="@color/land_near" android:pathData="M0,176 C60,150 110,160 170,172 C230,184 290,152 360,160 L360,220 L0,220 Z" />
+    <path android:fillColor="@color/land_front" android:pathData="M0,204 C70,186 140,194 200,202 C260,210 310,192 360,196 L360,220 L0,220 Z" />
+</vector>

@@ -26,5 +26,6 @@ data class Memory(
     val rediscoveryRadius: Int = 500,
 
     // True if the user marked this memory as a favourite
-    val isFavourite: Boolean = false
+    val isFavourite: Boolean = false,
+    val photoUri: String? = null
 )

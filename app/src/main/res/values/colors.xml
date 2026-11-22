@@ -141,4 +141,35 @@
     <color name="md_theme_surfaceContainer_highContrast">#E6E2D5</color>
     <color name="md_theme_surfaceContainerHigh_highContrast">#D8D4C7</color>
     <color name="md_theme_surfaceContainerHighest_highContrast">#CAC7BA</color>
+
+    <color name="ml_primary">#2F5E3B</color>
+    <color name="ml_on_primary">#FFFFFF</color>
+    <color name="ml_primary_container">#DCEAD9</color>
+    <color name="ml_on_primary_container">#10301A</color>
+    <color name="ml_secondary">#C2603A</color>
+    <color name="ml_on_secondary">#FFFFFF</color>
+    <color name="ml_secondary_container">#FBE4D3</color>
+    <color name="ml_on_secondary_container">#8A3A17</color>
+    <color name="ml_tertiary">#5E7F5F</color>
+    <color name="ml_tertiary_container">#EEF2E6</color>
+    <color name="ml_on_tertiary_container">#24361F</color>
+    <color name="ml_background">#FBF7EF</color>
+    <color name="ml_surface">#FBF7EF</color>
+    <color name="ml_surface_card">#FFFDF8</color>
+    <color name="ml_on_surface">#1F2A20</color>
+    <color name="ml_surface_variant">#F3EDE1</color>
+    <color name="ml_on_surface_variant">#5D665B</color>
+    <color name="ml_outline">#D8D2C4</color>
+    <color name="ml_error">#B3261E</color>
+    <color name="ml_toolbar">#2F5E3B</color>
+    <color name="ml_on_toolbar">#FFFFFF</color>
+    <color name="ml_heart">#C2603A</color>
+
+    <!-- Landscape illustration -->
+    <color name="land_sky">#CFE1CF</color>
+    <color name="land_sun">#F4E6C6</color>
+    <color name="land_far">#A7C4A3</color>
+    <color name="land_mid">#7EA57E</color>
+    <color name="land_near">#557F5A</color>
+    <color name="land_front">#355F3E</color>
 </resources>
